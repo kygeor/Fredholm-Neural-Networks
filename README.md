@@ -6,7 +6,7 @@ The theoretical framework, used for both the forward and inverse problems, is br
 1. Fredholm Neural Networks - https://epubs.siam.org/doi/full/10.1137/24M1686991?casa_token=LUOO2mbMhAcAAAAA%3AQUFO1UaeNBfHdXzGBU2c_oZFy2vwIea8jtON46KL_TC_wkjEke7VEW-lLoQ9bY0Gw9BZcFy1
 2. Fredholm Neural Networks for forward and inverse problems in elliptic PDEs - https://arxiv.org/abs/2507.06038
 
-To reference this code please refer to:
+To reference this code please cite:
 
 @article{georgiou2025fredholm,
   title={Fredholm neural networks},
@@ -215,6 +215,11 @@ Hence, the function $\beta({x}^{\star})$, defined on the boundary, must satisfy 
 
 $$\beta({x}^{\star}) = 2 \Big(f(x^{\star}) - \int_{\Omega} \Phi(x^*,y) \psi(y) dy \Big) - 2 \int_{\partial \Omega} \beta(y) \frac{\partial \Phi}{\partial n_{y}}(x^{\star}, y) d \sigma_{y},  x^{\star} \in \partial \Omega.$$
 
+<img width="548" height="376" alt="Screenshot 2025-10-08 at 4 58 58 PM" src="https://github.com/user-attachments/assets/f9edb609-f257-4c06-b96e-7ee4095c34bd" />
+
+* Figure 4: PFNN construction. The first component is a Fredholm Neural Network and the second encapsulates the representation of the double layer potential, decomposed into a the final hidden layer. *
+
+
 ### Poisson PDE - PFNN Construction 
 The Poisson PDE 
 
@@ -273,3 +278,38 @@ b_{M+1} = \left(\begin{array}{ccc}
 $$
 
 where we define $\delta\Phi(x,y) := \Phi(x,y) - \Phi(x^*,y)$.
+
+For this case the fundamental solution is given by the modified Bessel function of the second kind $\Phi(x,y) = -\frac{1}{2 \pi} K_0(\lambda | x-y|).$
+
+### Semi-linear elliptic PDE - Recurrent PFNN Construction 
+Consider the semi-linear PDE of the form: 
+
+$$
+\begin{cases}
+\Delta u(x) = F(x, u(x)), \quad x \in \Omega \\
+u(x) = f(x), \quad x \in \partial \Omega.
+\end{cases} 
+$$
+
+For their solution, we employ a fixed point scheme which linearizes the PDE at each step of the iteration. In line with this approach, we consider the monotone iteration scheme , as below: 
+
+1. Choose a $\lambda > 0$ "sufficiently large" (see below)
+2. Take an initial guess $u_0(x)$
+3. Solve, for $n = 0, 1, 2, \ldots$ the PDE:
+4. Solve using the PFNN:
+   
+$$
+\begin{cases}
+\Delta u_{n+1}(x) - \lambda u_{n+1}(x) = -\lambda u_n(x) + F(x, u_n(x)), & x \in \Omega, \label{iteration}\\
+u_{n+1}(x) = f(x), & x \in \partial \Omega.
+\end{cases}
+$$
+
+At each iteration we solve the PFNN for the Helmholtz PDE using the approximation for the integral with respect to the Poisson source at step n by:
+
+$$
+\int_{\Omega} \Phi(x, y) \psi_n(y) dy \approx \sum_{r \in \mathcal{R}} \sum_{\theta \in \Theta} \Phi(x,r, \theta) \psi_n(r,\theta)r \Delta r \Delta \theta.
+$$    
+
+
+
