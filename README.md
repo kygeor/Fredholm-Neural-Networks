@@ -192,7 +192,7 @@ Here, $\hat{f}(x;\hat{K}_{\theta})$ denotes the output of the Fredholm NN.
 
 <img width="613" height="234" alt="Screenshot 2025-10-08 at 2 26 57 PM" src="https://github.com/user-attachments/assets/5bd73f8c-0b5a-4500-bafc-7535dfb46edc" />
 
-* Figure 3: Algorithm to solve the inverse problem using the Fredholm NN framework. *
+*Figure 3: Algorithm to solve the inverse problem using the Fredholm NN framework.*
 
 # Potential Fredholm Neural Networks for elliptic PDEs
 
@@ -217,7 +217,7 @@ $$\beta({x}^{\star}) = 2 \Big(f(x^{\star}) - \int_{\Omega} \Phi(x^*,y) \psi(y) d
 
 <img width="548" height="376" alt="Screenshot 2025-10-08 at 4 58 58 PM" src="https://github.com/user-attachments/assets/f9edb609-f257-4c06-b96e-7ee4095c34bd" />
 
-* Figure 4: PFNN construction. The first component is a Fredholm Neural Network and the second encapsulates the representation of the double layer potential, decomposed into a the final hidden layer. *
+*Figure 4: PFNN construction. The first component is a Fredholm Neural Network and the second encapsulates the representation of the double layer potential, decomposed into a the final hidden layer.*
 
 
 ### Poisson PDE - PFNN Construction 
