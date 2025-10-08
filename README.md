@@ -28,8 +28,9 @@ and/or
   year={2025}
 }
 
-1. Fredholm Neural Networks for Integral Equations
+# 1.  Fredholm Neural Networks for Integral Equations
 
+## Background
 The basis of FNNs is the method of successive approximations (fixed point iterations) to approximate the fixed-point solution to Fredholm Integral Equations (FIEs). Specifically, the framework is built upon linear FIEs of the second kind, which are of the form:
 $$f(x) = g(x) + \int_{\Omega}K(x,z) f(z)dz, $$
 as well as the non-linear counterpart,
@@ -41,11 +42,10 @@ $$f_{n+1}(x) = f_n(x) + \kappa_n(\mathcal{T}f_n(x) -f_n(x)) = (1-\kappa_n)f_n(x)
 with $f_0(x) = g(x)$, converges to the fixed point solution of the FIE, $f^{*}(x)$.
 
 When $\mathcal{T}$ is a contraction, we can obtain the iterative process:
-$$
-	f_n(x)= g(x) +  \int_{\Omega}f_{n-1})(x), \,\,\ n \geq 1,
-$$
+$$f_n(x)= g(x) +  \int_{\Omega}f_{n-1})(x), \,\,\ n \geq 1,$$
 which converges to the fixed point solution. This is often referred to as the method of successive approximations.
 
+## FNN construction
 Fredholm Neural Networks are based on the observation that the FIE approximation $f_K(x)$ can be implemented as a deep neural network with a one-dimensional input $x$, $M$ hidden layers, a linear activation function and a single output node corresponding to the estimated solution $f(x)$. The weights and biases are:
 
 $$
