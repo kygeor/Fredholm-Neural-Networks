@@ -171,9 +171,7 @@ This consists of taking as data two functions $f, g : \Omega \to \mathbb{R}$ and
 Our strategy uses the structure/convergence of the Fredholm NN: select parameters $$\theta$$ so that, when constructing the estimated kernel ${K}_{\theta}$ and feeding it into the Fredholm NN with $M$ hidden layers, the network output $\hat{f}(x;\hat K_\theta)$ is close to the data $\tilde{f}$ under an appropriate loss.
 
 We use two terms:
-$$
-{R}(\theta) = \sum_j |w_j|^2 
-$$
+$$R_(\theta) = \sum_j w_j^2 $$
 
 $${R}_{{FIE}}(\theta)= \frac{1}{N}\sum_{i=1}^{N}
 \Big(\tilde{f}(x_i) - (\mathcal{T}_{\theta}\tilde{f})(x_i)\Big)^2 $$
