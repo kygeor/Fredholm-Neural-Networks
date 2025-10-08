@@ -33,19 +33,16 @@ and/or
 The basis of FNNs is the method of successive approximations (fixed point iterations) to approximate the fixed-point solution to Fredholm Integral Equations (FIEs). Specifically, the framework is built upon linear FIEs of the second kind, which are of the form:
 $$f(x) = g(x) + \int_{\Omega}K(x,z) f(z)dz, $$
 as well as the non-linear counterpart,
-$$f(x) = g(x) + \int_{\mathcal{D}}K(x,z) G(f(z))dz,$$
+$$f(x) = g(x) + \int_{\Omega}K(x,z) G(f(z))dz,$$
 for some function $G: \mathbb{R} \rightarrow\mathbb{R}$ considered to be a Lipschitz function. 
 
 We consider the cases where the integral operators are either contractive or non-expansive. This allows linear FIE defined by a non-expansive operator $\mathcal{T}$, and a sequence $\{\kappa_n\}, \kappa_n \in (0,1]$ such that $\sum_n \kappa_n(1-\kappa_n) = \infty$. Then, the iterative scheme:
-$$
-    f_{n+1}(x) = f_n(x) + \kappa_n(\mathcal{T}f_n(x) -f_n(x)) = (1-\kappa_n)f_n(x) + \kappa_n \mathcal{T} f_n(x),
-$$
+$$f_{n+1}(x) = f_n(x) + \kappa_n(\mathcal{T}f_n(x) -f_n(x)) = (1-\kappa_n)f_n(x) + \kappa_n \mathcal{T} f_n(x),$$
 with $f_0(x) = g(x)$, converges to the fixed point solution of the FIE, $f^{*}(x)$.
-\end{proposition}
 
 When $\mathcal{T}$ is a contraction, we can obtain the iterative process:
 $$
-	f_n(x)= g(x) +  \int_{\mathcal{D}}f_{n-1})(x), \,\,\ n \geq 1,
+	f_n(x)= g(x) +  \int_{\Omega}f_{n-1})(x), \,\,\ n \geq 1,
 $$
 which converges to the fixed point solution. This is often referred to as the method of successive approximations.
 
