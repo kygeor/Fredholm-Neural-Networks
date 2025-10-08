@@ -168,17 +168,18 @@ $$y(x) = \frac{h(x) - u(x)}{g(x)}.$$
 
 This consists of taking as data two functions $f, g : \Omega \to \mathbb{R}$ and modeling an unknown kernel $K : \Omega \times \Omega \to \mathbb{R}$ (e.g., a neural network) so that $f$ satisfies a target integral equation. Hence, the inverse problem is: given $\tilde{f}$ and $g$, find $K$ such that the induced integral operator admits a solution $f$ that matches $\tilde{f}$ on the chosen collocation points. 
 
-Our strategy uses the structure/convergence of the Fredholm NN: select parameters $$\theta$$ so that, when constructing the estimated kernel ${K}_{\theta}$ and feeding it into the Fredholm NN with $M$ hidden layers, the network output $\hat{f}(x;\hat K_\theta)$ is close to the data $\tilde{f}$ under an appropriate loss.
+Our strategy uses the structure/convergence of the Fredholm NN: select parameters $\theta$ so that, when constructing the estimated kernel $K_\theta$ and feeding it into the Fredholm NN with M hidden layers, the network output $\hat{f}(x;\hat K_\theta)$ is close to the data $\tilde{f}$ under an appropriate loss.
 
 We use two terms:
-$$R_(\theta) = \sum_j w_j^2 $$
+
+$$R_{\theta} = \sum_j w_j^2 $$
 
 $${R}_{{FIE}}(\theta)= \frac{1}{N}\sum_{i=1}^{N}
 \Big(\tilde{f}(x_i) - (\mathcal{T}_{\theta}\tilde{f})(x_i)\Big)^2 $$
 
 with
 
-$$ \mathcal{T}_{\theta}\tilde{f})(x) := g(x) + \int_{\Omega} \hat{K}_{\theta}(x,y)\,\tilde{f}(y)\,dy.$$
+$$ (\mathcal{T}_{\theta}\tilde{f})(x) := g(x) + \int_{\Omega} \hat{K}_{\theta}(x,y)\,\tilde{f}(y)\,dy.$$
 
 The complete loss is
 
@@ -191,7 +192,7 @@ Here, $\hat{f}(x;\hat{K}_{\theta})$ denotes the output of the Fredholm NN.
 
 <img width="613" height="234" alt="Screenshot 2025-10-08 at 2 26 57 PM" src="https://github.com/user-attachments/assets/5bd73f8c-0b5a-4500-bafc-7535dfb46edc" />
 
-* Figure 3: Algorithm to solve the inverse problem using the Fredholm NN framework. **
+* Figure 3: Algorithm to solve the inverse problem using the Fredholm NN framework. *
 
 # Potential Fredholm Neural Networks for elliptic PDEs
 
@@ -199,7 +200,8 @@ Here we briefly provide the background in Potential Theory and how it is applied
 
 Consider the two-dimensional linear Poisson equation for $u(x)$:
 
-$$\begin{cases}\Delta u(x) = \psi(x), & \text { for } x \in \Omega \\ u(x)= f(x) & \text { for } {x} \in \partial \Omega. \end{cases}$$
+$$\begin{cases}\Delta u(x) = \psi(x), & \text { for } x \in \Omega \\
+u(x)= f(x) & \text { for } {x} \in \partial \Omega. \end{cases}$$
 
 Its solution can be written via the double layer boundary integral given by:
 
@@ -211,8 +213,7 @@ $$\lim _{\substack{x \rightarrow x^{\star} \\ x \in \Omega}}   \int_{\partial \O
 
 Hence, the function $\beta({x}^{\star})$, defined on the boundary, must satisfy the Boundary Integral Equation (BIE):
 
-$$\beta({x}^{\star}) = 2 \Big(f(x^{\star}) - \int_{\Omega
-    } \Phi(x^*,y) \psi(y) dy \Big) - 2 \int_{\partial \Omega} \beta(y) \frac{\partial \Phi}{\partial n_{y}}(x^{\star}, y) d \sigma_{y},  x^{\star} \in \partial \Omega.$$
+$$\beta({x}^{\star}) = 2 \Big(f(x^{\star}) - \int_{\Omega} \Phi(x^*,y) \psi(y) dy \Big) - 2 \int_{\partial \Omega} \beta(y) \frac{\partial \Phi}{\partial n_{y}}(x^{\star}, y) d \sigma_{y},  x^{\star} \in \partial \Omega.$$
 
 
 
