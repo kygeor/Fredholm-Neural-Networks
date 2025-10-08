@@ -30,7 +30,30 @@ and/or
 
 1. Fredholm Neural Networks for Integral Equations
 
-The $M$-layer FIE approximation $f_K(x)$ can be implemented as a deep neural network with a one-dimensional input $x$, $M$ hidden layers, a linear activation function and a single output node corresponding to the estimated solution $f(x)$. The weights and biases are:
+The basis of FNNs is the method of successive approximations (fixed point iterations) to approximate the fixed-point solution to Fredholm Integral Equations (FIEs). Specifically, the framework is built upon linear FIEs of the second kind, which are of the form:
+$$
+	f(x) = g(x) + \int_{\mathcal{D}}K(x,z) f(z)dz,
+$$
+as well as the non-linear counterpart,
+$$
+    f(x) = g(x) + \int_{\mathcal{D}}K(x,z) G(f(z))dz,
+$$
+for some function $G: \mathbb{R} \rightarrow\mathbb{R}$ considered to be a Lipschitz function. 
+
+We consider the cases where the integral operators are either contractive or non-expansive. This allows linear FIE defined by a non-expansive operator $\mathcal{T}$, and a sequence $\{\kappa_n\}, \kappa_n \in (0,1]$ such that $\sum_n \kappa_n(1-\kappa_n) = \infty$. Then, the iterative scheme:
+$$
+    f_{n+1}(x) = f_n(x) + \kappa_n(\mathcal{T}f_n(x) -f_n(x)) = (1-\kappa_n)f_n(x) + \kappa_n \mathcal{T} f_n(x),
+$$
+with $f_0(x) = g(x)$, converges to the fixed point solution of the FIE, $f^{*}(x)$.
+\end{proposition}
+
+When $\mathcal{T}$ is a contraction, we can obtain the iterative process:
+$$
+	f_n(x)= g(x) +  \int_{\mathcal{D}}f_{n-1})(x), \,\,\ n \geq 1,
+$$
+which converges to the fixed point solution. This is often referred to as the method of successive approximations.
+
+Fredholm Neural Networks are based on the observation that the FIE approximation $f_K(x)$ can be implemented as a deep neural network with a one-dimensional input $x$, $M$ hidden layers, a linear activation function and a single output node corresponding to the estimated solution $f(x)$. The weights and biases are:
 
 $$
 W_1 =
@@ -92,6 +115,11 @@ $$
 assuming $z_i = x$.
 
 
-<img width="324" height="290" alt="Screenshot 2025-10-08 at 11 45 05 AM" src="https://github.com/user-attachments/assets/2cdfd98b-7c52-4119-999d-b1bc40732a6b" /> *Figure 1: Architecture of the Fredholm Neural Network (FNN).*
-<img width="575" height="248" alt="Screenshot 2025-10-08 at 11 45 33 AM" src="https://github.com/user-attachments/assets/bbda1e93-36b5-4c83-afa3-8b86d9459996" />
+<img width="324" height="290" alt="Screenshot 2025-10-08 at 11 45 05 AM" src="https://github.com/user-attachments/assets/2cdfd98b-7c52-4119-999d-b1bc40732a6b" /> 
+<img width="575" height="248" alt="Screenshot 2025-10-08 at 11 45 33 AM" src="https://github.com/user-attachments/assets/bbda1e93-36b5-4c83-afa3-8b86d9459996" /> 
+*Figure 1: Architecture of the Fredholm Neural Network (FNN). Outputs can be considered across the entire (or a subset of the) input grid, or for an arbitrary output vector as shown in the second graph, by applying the integral mapping one last time.*
+
+
+
+
 
