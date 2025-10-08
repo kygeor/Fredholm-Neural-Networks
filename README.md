@@ -30,7 +30,7 @@ and/or
 
 1. Fredholm Neural Networks for Integral Equations
 
-\begin{proposition}[Fredholm Neural Network] The $M$-layer FIE approximation $f_K(x)$ can be implemented as a Deep Neural Network with a one-dimensional input $x$, $M$ hidden layers, a linear activation function and a single output node corresponding the estimated solution $f(x)$, where the weights and biases are given by:
+The $M$-layer FIE approximation $f_K(x)$ can be implemented as a Deep Neural Network with a one-dimensional input $x$, $M$ hidden layers, a linear activation function and a single output node corresponding the estimated solution $f(x)$, where the weights and biases are given by:
 \begin{flalign}
     W_1 = \left(\begin{array}{ccc}
 		\kappa g(z_1), \dots, \kappa g(z_{N})
@@ -65,7 +65,6 @@ for hidden layers $m= 2, \dots, M-1$, where $K_D\left(z\right) := {K}\left(z, z\
 	\end{gathered}
 \end{flalign}
 $b_M =\big(\kappa g(x) \big)$, for the final layer, assuming $z_i = x$.
-\end{proposition}
 
 <img width="324" height="290" alt="Screenshot 2025-10-08 at 11 45 05 AM" src="https://github.com/user-attachments/assets/2cdfd98b-7c52-4119-999d-b1bc40732a6b" />
 <img width="575" height="248" alt="Screenshot 2025-10-08 at 11 45 33 AM" src="https://github.com/user-attachments/assets/bbda1e93-36b5-4c83-afa3-8b86d9459996" />
