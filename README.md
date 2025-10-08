@@ -165,7 +165,6 @@ Finally, by definition of $u(x)$, we can obtain the solution to the BVP by:
 $$y(x) = \frac{h(x) - u(x)}{g(x)}.$$
 
 
-
-
+# Potential Fredholm Neural Networks for elliptic PDEs
 
 
