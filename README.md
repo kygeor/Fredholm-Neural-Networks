@@ -1,5 +1,5 @@
 # Fredholm Neural Networks
-This repository contains the codes in Python and MATLAB that were developed and used for the Fredholm Neural Network (FNN) and Potential Fredholm Neural Network (PFNN) framework.
+This repository contains the codes in Python and MATLAB that were developed and used for the **Fredholm Neural Network (FNN)** and **Potential Fredholm Neural Network (PFNN)** framework.
 
 The theoretical framework, used for both the forward and inverse problems, is briefly described below. For the full details see the papers:
 
@@ -215,6 +215,24 @@ Hence, the function $\beta({x}^{\star})$, defined on the boundary, must satisfy 
 
 $$\beta({x}^{\star}) = 2 \Big(f(x^{\star}) - \int_{\Omega} \Phi(x^*,y) \psi(y) dy \Big) - 2 \int_{\partial \Omega} \beta(y) \frac{\partial \Phi}{\partial n_{y}}(x^{\star}, y) d \sigma_{y},  x^{\star} \in \partial \Omega.$$
 
+## Poisson PDE - PFNN Construction 
+The Poisson PDE can be solved using a Fredholm NN, with M+1 hidden layers, where the weights and biases of the M hidden layers are used iteratively solve the BIE on a discretized grid of the boundary, $y_1, \dots, y_N$, 
+for which the final and output weights $W_{M+1} \in \mathbb{R}^{N \times N}, W_O \in \mathbb{R}^N$ are given by:
 
+$$
+W_{M+1}= I_{N \times N}, 
+W_{O}= \left(\begin{array}{cccc}
+\mathcal{D} \Phi(x, y_1)\Delta \sigma_y, & \mathcal{D} \Phi(x, y_2)\Delta\sigma_y, & \dots, & \mathcal{D} \Phi(x, y_N) \Delta \sigma_y
+\end{array}\right)^{\top},
+$$
+
+where we define the simple operator $\mathcal{D} \Phi({x}, {y}):= \Big(\frac{\partial \Phi}{\partial n_y}(x, y)- \frac{\partial \Phi}{\partial n_y}(x^{\star}, y)\Big)$. The corresponding biases $b_{M+1} \in \mathbb{R}^{N}$ and $b_O \in \mathbb{R}$ are given by:
+
+$$ b_{M+1} = \left(\begin{array}{ccc}
+-\beta(x^{\star}), \dots, - \beta(x^{\star})
+\end{array}\right)^{\top}, b_O= \frac{1}{2} \beta(x^{\star}) + \int_{\partial \Omega} \beta(y) \frac{\partial \Phi(x^*, y)}{\partial n_y} d\sigma_y + \int_{\Omega} \Phi(x,y) \psi(y) dy,
+$$
+
+where $x^*:= (1, \phi) \in \partial \Omega$ is the unique point on the boundary corresponding to $x:= (r, \phi) \in \Omega$.  
 
 
