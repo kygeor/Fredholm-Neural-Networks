@@ -30,41 +30,67 @@ and/or
 
 1. Fredholm Neural Networks for Integral Equations
 
-The $M$-layer FIE approximation $f_K(x)$ can be implemented as a Deep Neural Network with a one-dimensional input $x$, $M$ hidden layers, a linear activation function and a single output node corresponding the estimated solution $f(x)$, where the weights and biases are given by:
-\begin{flalign}
-    W_1 = \left(\begin{array}{ccc}
-		\kappa g(z_1), \dots, \kappa g(z_{N})
-	\end{array}\right)^{\top}, \,\,\,\,\    b_1 = \left(\begin{array}{ccc}
-		0, 0, \dots, 0
-	\end{array}\right)^{\top}
- \end{flalign} 
-for the first hidden layer,  
-\begin{eqnarray}	\label{inner-weight}
-W_m=
-%\left\{\Tilde{K}\left(z_i^{(m-1)}, z_j^{(m)}\right) \Delta z\right\}_{\substack{i \in\left\{1, \ldots, N_{m-1}\right\} \\ j \in\left\{1, . ., N_m\right\}}}= %
-\left(\begin{array}{cccc}
-	K_D\left(z_1\right) & {K}\left(z_1, z_2\right)\Delta z & \cdots & {K}\left(z_1, z_{N}\right)\Delta z \\
- {K}\left(z_2, z_1\right)\Delta z  & K_D\left(z_2\right) & \cdots & {K}\left(z_2, z_{N}\right)\Delta z \\
-	\vdots & \vdots & \ddots & \vdots \\
-	\vdots & \vdots & \vdots & \vdots \\
-	{K}\left(z_{N}, z_1\right)\Delta z & {K}\left(z_{N}, z_2\right)\Delta z & \cdots & K_D\left(z_{N}\right) 
-\end{array}\right),
-\end{eqnarray}
+The $M$-layer FIE approximation $f_K(x)$ can be implemented as a deep neural network with a one-dimensional input $x$, $M$ hidden layers, a linear activation function and a single output node corresponding to the estimated solution $f(x)$. The weights and biases are:
+
+$$
+W_1 =
+\begin{bmatrix}
+\kappa g(z_1) \\
+\vdots \\
+\kappa g(z_{N})
+\end{bmatrix},
+\qquad
+b_1 =
+\begin{bmatrix}
+0 \\
+\vdots \\
+0
+\end{bmatrix}.
+$$
+
+for the first hidden layer,
+
+$$
+W_m =
+\begin{bmatrix}
+K_D(z_1) & K(z_1,z_2)\,\Delta z & \cdots & K(z_1,z_N)\,\Delta z \\
+K(z_2,z_1)\,\Delta z & K_D(z_2) & \cdots & K(z_2,z_N)\,\Delta z \\
+\vdots & \vdots & \ddots & \vdots \\
+K(z_N,z_1)\,\Delta z & K(z_N,z_2)\,\Delta z & \cdots & K_D(z_N)
+\end{bmatrix},
+$$
+
 and
-\begin{eqnarray}
-	b_m=\left(\begin{array}{ccc}
-		\kappa g(z_1), \dots, \kappa g(z_{N})
-	\end{array}\right)^{\top},
-\end{eqnarray}
-for hidden layers $m= 2, \dots, M-1$, where $K_D\left(z\right) := {K}\left(z, z\right)\Delta z + (1-\kappa_m)$, and:
-\begin{flalign} \label{outer-weight}
-	\begin{gathered}
-		W_M=\left(\begin{array}{ccc}
-			K(z_1, x)\Delta z, \dots, K(z_{i-1},x)\Delta z, K_D(x), K(z_{i+1}, x)\Delta z, \dots, K(z_{N}, x)\Delta z
-		\end{array}\right)^{\top},
-	\end{gathered}
-\end{flalign}
-$b_M =\big(\kappa g(x) \big)$, for the final layer, assuming $z_i = x$.
+
+$$
+b_m =
+\begin{bmatrix}
+\kappa g(z_1) \\
+\vdots \\
+\kappa g(z_N)
+\end{bmatrix},
+\qquad m=2,\dots,M-1,
+$$
+
+where \(K_D(z) := K(z,z)\,\Delta z + (1-\kappa_m)\). Finally,
+
+$$
+W_M =
+\begin{bmatrix}
+K(z_1,x)\,\Delta z \\
+\vdots \\
+K(z_{i-1},x)\,\Delta z \\
+K_D(x) \\
+K(z_{i+1},x)\,\Delta z \\
+\vdots \\
+K(z_N,x)\,\Delta z
+\end{bmatrix},
+\qquad
+b_M = \kappa g(x),
+$$
+
+assuming \(z_i = x\).
+
 
 <img width="324" height="290" alt="Screenshot 2025-10-08 at 11 45 05 AM" src="https://github.com/user-attachments/assets/2cdfd98b-7c52-4119-999d-b1bc40732a6b" />
 <img width="575" height="248" alt="Screenshot 2025-10-08 at 11 45 33 AM" src="https://github.com/user-attachments/assets/bbda1e93-36b5-4c83-afa3-8b86d9459996" />
