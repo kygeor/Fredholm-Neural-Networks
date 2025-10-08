@@ -114,6 +114,26 @@ assuming $z_i = x$.
 *Figure 1: Architecture of the Fredholm Neural Network (FNN). Outputs can be considered across the entire (or a subset of the) input grid, or for an arbitrary output vector as shown in the second graph, by applying the integral mapping one last time.*
 
 
+## Application to non-linear FIEs and BVP ODEs
+
+
+
+
+Consider a BVP of the form:
+
+    $$y''(x) + g(x)y(x) = h(x), \,\,\,\, 0<x<1,$$ 
+  with $y(0) = \alpha, y(1) = \beta$.
+Then we can solve the BVP by obtaining the following FIE:
+$$u(x) = f(x) + \int_{0}^{1} K(x,t) u(t)dt,$$
+where $u(x) = y''(x), f(x) = h(x) - \alpha g(x) - (\beta - \alpha) x g(x)$, and the kernel is given by:
+$$ K(x,t) = 
+    \begin{cases}
+        t(1-x)g(x), \,\,\, 0 \leq t \leq x \\
+        x(1-t)g(x), \,\,\, x\leq t \leq 1.
+    \end{cases}$$
+Finally, by definition of $u(x)$, we can obtain the solution to the BVP by:
+$$y(x) = \frac{h(x) - u(x)}{g(x)}.$$
+
 
 
 
