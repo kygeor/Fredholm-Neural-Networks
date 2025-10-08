@@ -72,7 +72,7 @@ b_m =
 \qquad m=2,\dots,M-1,
 $$
 
-where \(K_D(z) := K(z,z)\,\Delta z + (1-\kappa_m)\). Finally,
+where $K_D(z) := K(z,z)\,\Delta z + (1-\kappa_m)$. Finally,
 
 $$
 W_M =
@@ -89,7 +89,7 @@ K(z_N,x)\,\Delta z
 b_M = \kappa g(x),
 $$
 
-assuming \(z_i = x\).
+assuming $z_i = x$.
 
 
 <img width="324" height="290" alt="Screenshot 2025-10-08 at 11 45 05 AM" src="https://github.com/user-attachments/assets/2cdfd98b-7c52-4119-999d-b1bc40732a6b" />
