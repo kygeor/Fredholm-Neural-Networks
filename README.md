@@ -32,13 +32,19 @@ and/or
 
 ## Background
 The basis of FNNs is the method of successive approximations (fixed point iterations) to approximate the fixed-point solution to Fredholm Integral Equations (FIEs). Specifically, the framework is built upon linear FIEs of the second kind, which are of the form:
+
 $$f(x) = g(x) + \int_{\Omega}K(x,z) f(z)dz, $$
+
 as well as the non-linear counterpart,
+
 $$f(x) = g(x) + \int_{\Omega}K(x,z) G(f(z))dz,$$
+
 for some function $G: \mathbb{R} \rightarrow\mathbb{R}$ considered to be a Lipschitz function. 
 
 We consider the cases where the integral operators are either contractive or non-expansive. This allows linear FIE defined by a non-expansive operator $\mathcal{T}$, and a sequence $\{\kappa_n\}, \kappa_n \in (0,1]$ such that $\sum_n \kappa_n(1-\kappa_n) = \infty$. Then, the iterative scheme:
+
 $$f_{n+1}(x) = f_n(x) + \kappa_n(\mathcal{T}f_n(x) -f_n(x)) = (1-\kappa_n)f_n(x) + \kappa_n \mathcal{T} f_n(x),$$
+
 with $f_0(x) = g(x)$, converges to the fixed point solution of the FIE, $f^{*}(x)$.
 
 When $\mathcal{T}$ is a contraction, we can obtain the iterative process:
@@ -114,25 +120,51 @@ assuming $z_i = x$.
 *Figure 1: Architecture of the Fredholm Neural Network (FNN). Outputs can be considered across the entire (or a subset of the) input grid, or for an arbitrary output vector as shown in the second graph, by applying the integral mapping one last time.*
 
 
-## Application to non-linear FIEs and BVP ODEs
+## Application to non-linear FIEs 
+
+We can create an iterative process that "linearizes" the integral equation and allows us to solve a linear FIE at each step. To this end, consider the nonlinear operator  ${\cal T}^{K,G,g} : {\cal Z} \to {\cal Z}$ defined by
+as defined above and consider the non-linear IE %(\ref{nl-ie}), with a non-expansive integral operator:
+
+$$(\mathcal{T}^{K,G,g}f)(x) := g(x) + \int_{\Omega}K(x,z) G(f(z))dz.$$
+
+Then, the iterative scheme $f_n(x) = \tilde{f}_n(x)$, where $\tilde{f}_n(x)$ is the solution to the linear FIE:
+
+    $$\tilde{f}_{n}(x) = ({L}\tilde{f}_{n-1})(x) + \int_{\Omega}K(x,z) \tilde{f}_{n}(z))dz,$$
+    
+and 
+$$\mathcal{L}\tilde{f}_{n-1})(x) := g(x) + \int_{\Omega} K(x,y)\big( G(\tilde{f}_{n-1}(y)) - \tilde{f}_{n-1}(y)\big)dy,$$ 
+
+for $n \geq 1$, converges to the fixed point $f^*$  which is a solution of the non-linear FIE.
+
+<img width="636" height="207" alt="Screenshot 2025-10-08 at 1 35 31 PM" src="https://github.com/user-attachments/assets/f692d52e-21a0-4f2a-b668-f8a938527a3f" />
+
+*Figure 2: Iterative process to solve the non-linear FIE using the Fredholm NN architecture.*
 
 
 
+## Application to BVP ODEs
 
 Consider a BVP of the form:
 
-    $$y''(x) + g(x)y(x) = h(x), \,\,\,\, 0<x<1,$$ 
-  with $y(0) = \alpha, y(1) = \beta$.
-Then we can solve the BVP by obtaining the following FIE:
+    $$y''(x) + g(x)y(x) = h(x), 0<x<1,$$ 
+    
+with $y(0) = \alpha, y(1) = \beta$. Then we can solve the BVP by obtaining the following FIE:
+
 $$u(x) = f(x) + \int_{0}^{1} K(x,t) u(t)dt,$$
+
 where $u(x) = y''(x), f(x) = h(x) - \alpha g(x) - (\beta - \alpha) x g(x)$, and the kernel is given by:
+
 $$ K(x,t) = 
     \begin{cases}
         t(1-x)g(x), \,\,\, 0 \leq t \leq x \\
         x(1-t)g(x), \,\,\, x\leq t \leq 1.
     \end{cases}$$
+    
 Finally, by definition of $u(x)$, we can obtain the solution to the BVP by:
+
 $$y(x) = \frac{h(x) - u(x)}{g(x)}.$$
+
+
 
 
 
