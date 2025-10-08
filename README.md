@@ -31,13 +31,9 @@ and/or
 1. Fredholm Neural Networks for Integral Equations
 
 The basis of FNNs is the method of successive approximations (fixed point iterations) to approximate the fixed-point solution to Fredholm Integral Equations (FIEs). Specifically, the framework is built upon linear FIEs of the second kind, which are of the form:
-$$
-	f(x) = g(x) + \int_{\mathcal{D}}K(x,z) f(z)dz,
-$$
+$$f(x) = g(x) + \int_{\Omega}K(x,z) f(z)dz, $$
 as well as the non-linear counterpart,
-$$
-    f(x) = g(x) + \int_{\mathcal{D}}K(x,z) G(f(z))dz,
-$$
+$$f(x) = g(x) + \int_{\mathcal{D}}K(x,z) G(f(z))dz,$$
 for some function $G: \mathbb{R} \rightarrow\mathbb{R}$ considered to be a Lipschitz function. 
 
 We consider the cases where the integral operators are either contractive or non-expansive. This allows linear FIE defined by a non-expansive operator $\mathcal{T}$, and a sequence $\{\kappa_n\}, \kappa_n \in (0,1]$ such that $\sum_n \kappa_n(1-\kappa_n) = \infty$. Then, the iterative scheme:
