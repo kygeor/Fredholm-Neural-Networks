@@ -166,16 +166,30 @@ $$y(x) = \frac{h(x) - u(x)}{g(x)}.$$
 
 ## Application to the inverse kernel problem (for FIEs)
 
-This consists of taking as data two functions $f, g : \mathcal{D} \to {\mathbb R}$ and looking to model the unknown kernel function $K : \mathcal{D} \times \mathcal{D} \to {\mathbb R}$, for example a neural network, such that the function $f$ satisfies the integral equation (\ref{ie}) or (\ref{nl-ie-def}). Hence, the inverse problem consists of, given the data $\tilde{f}$, $g$, modelling the unknown kernel function $K$, such that it provides a consistent finite‐dimensional approximation of the integral operator, i.e., such that %associated with 
-the integral equation whose solution $f$ coincides with $\tilde{f}$ on the chosen collocation points. our strategy for solving the inverse problem takes advantage of the structure and convergence properties of the Fredholm NN as follows: select a set of parameters $\theta$ such that when constructing the estimated kernel $\hat{K}_{\theta}(\cdot, \cdot)$ and then feeding this into the Fredholm NN with $M$ hidden layers, denoted by $FNN_M( \cdot ; \hat{K}_{\theta})$, the output of the Fredholm NN, $\hat{f}(x;\hat{K}_{\theta})$, is as ''close'' as possible (in terms of an appropriately chosen loss function) to the given data $\tilde{f}$. Hence, we have:
-$$ \mathcal{R}(\theta) = \sum_j |w_j|^2, \,\,\ \text{for } \ell_2 ,\\
-    \frac{1}{N} \sum_{i=1}^{N} \Big(\tilde{f}(x_i) - (\mathcal{T}_{\theta}\tilde{f})(x_i)  \Big)^2, \,\,\ \text{for the FIE residual},$$
+This consists of taking as data two functions $f, g : \Omega \to \mathbb{R}$ and modeling an unknown kernel $K : \Omega \times \Omega \to \mathbb{R}$ (e.g., a neural network) so that $f$ satisfies a target integral equation. Hence, the inverse problem is: given $\tilde{f}$ and $g$, find $K$ such that the induced integral operator admits a solution $f$ that matches $\tilde{f}$ on the chosen collocation points. 
 
-where, $(\mathcal{T}_{\theta}\tilde{f})(x):= g(x) + \int_{\mathcal{D}} \hat{K}_{\theta}(x,y)\tilde{f}(y)dy$ and the complete loss function is given by: 
+Our strategy uses the structure/convergence of the Fredholm NN: select parameters $$\theta$$ so that, when constructing the estimated kernel ${K}_{\theta}$ and feeding it into the Fredholm NN with $M$ hidden layers, the network output $\hat{f}(x;\hat K_\theta)$ is close to the data $\tilde{f}$ under an appropriate loss.
 
-$$L(\theta) = \frac{1}{N} \sum_{i=1}^{N} \Big(f(x_i) - \hat{f}(x_i; \hat{K}_\theta) \Big)^2 + \lambda_{reg}\mathcal{R}(\theta),$$
+We use two terms:
+$$
+{R}(\theta) = \sum_j |w_j|^2 
+$$
 
-where recall $\hat{f}(x_i;\hat{K}_{\theta})$ represents the output of the Fredhom NN.
+$${R}_{{FIE}}(\theta)= \frac{1}{N}\sum_{i=1}^{N}
+\Big(\tilde{f}(x_i) - (\mathcal{T}_{\theta}\tilde{f})(x_i)\Big)^2 $$
+
+with
+
+$$ \mathcal{T}_{\theta}\tilde{f})(x) := g(x) + \int_{\Omega} \hat{K}_{\theta}(x,y)\,\tilde{f}(y)\,dy.$$
+
+The complete loss is
+
+$$
+L(\theta) = \frac{1}{N}\sum_{i=1}^{N} \Big(f(x_i) - \hat{f}(x_i;\hat{K}_{\theta})\Big)^2 + \lambda_{reg}\,{R}(\theta).
+$$
+
+Here, $\hat{f}(x;\hat{K}_{\theta})$ denotes the output of the Fredholm NN.
+
 
 <img width="613" height="234" alt="Screenshot 2025-10-08 at 2 26 57 PM" src="https://github.com/user-attachments/assets/5bd73f8c-0b5a-4500-bafc-7535dfb46edc" />
 
@@ -191,7 +205,7 @@ $$\begin{cases}\Delta u(x) = \psi(x), & \text { for } x \in \Omega \\ u(x)= f(x)
 
 Its solution can be written via the double layer boundary integral given by:
 
-$$u(x) =  \int_{\partial \Omega} \beta(y) \frac{\partial \Phi}{\partial n_{y}}(x, y) d \sigma_{y} + \int_{\Omega} \Phi(x,y) \psi(y) d y , \,\, x \in \Omega,$$
+$$u(x) =  \int_{\partial \Omega} \beta(y) \frac{\partial \Phi}{\partial n_{y}}(x, y) d \sigma_{y} + \int_{\Omega} \Phi(x,y) \psi(y) d y ,  x \in \Omega,$$
 
 where $\Phi(x,y)$ is the fundamental solution of the Laplace equation, $n_y$ is the outward pointing normal vector to $y$, $\sigma_y$ is the surface element at point $y\in \partial \Omega$, and $\frac{\partial \Phi}{\partial n_{y}} = n_y \cdot \nabla_{ y}{\Phi}$. It can be shown that the following limit holds, as we approach the boundary: 
 
@@ -200,7 +214,7 @@ $$\lim _{\substack{x \rightarrow x^{\star} \\ x \in \Omega}}   \int_{\partial \O
 Hence, the function $\beta({x}^{\star})$, defined on the boundary, must satisfy the Boundary Integral Equation (BIE):
 
 $$\beta({x}^{\star}) = 2 \Big(f(x^{\star}) - \int_{\Omega
-    } \Phi(x^*,y) \psi(y) dy \Big) - 2 \int_{\partial \Omega} \beta(y) \frac{\partial \Phi}{\partial n_{y}}(x^{\star}, y) d \sigma_{y}, \,\,\ x^{\star} \in \partial \Omega.$$
+    } \Phi(x^*,y) \psi(y) dy \Big) - 2 \int_{\partial \Omega} \beta(y) \frac{\partial \Phi}{\partial n_{y}}(x^{\star}, y) d \sigma_{y},  x^{\star} \in \partial \Omega.$$
 
 
 
