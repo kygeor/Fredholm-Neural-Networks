@@ -215,8 +215,17 @@ Hence, the function $\beta({x}^{\star})$, defined on the boundary, must satisfy 
 
 $$\beta({x}^{\star}) = 2 \Big(f(x^{\star}) - \int_{\Omega} \Phi(x^*,y) \psi(y) dy \Big) - 2 \int_{\partial \Omega} \beta(y) \frac{\partial \Phi}{\partial n_{y}}(x^{\star}, y) d \sigma_{y},  x^{\star} \in \partial \Omega.$$
 
-## Poisson PDE - PFNN Construction 
-The Poisson PDE can be solved using a Fredholm NN, with M+1 hidden layers, where the weights and biases of the M hidden layers are used iteratively solve the BIE on a discretized grid of the boundary, $y_1, \dots, y_N$, 
+### Poisson PDE - PFNN Construction 
+The Poisson PDE 
+
+$$
+\begin{cases}
+ \Delta u(x)  = \psi(x), \quad x \in \Omega \\ 
+u(x) = f(x), \quad x \in \partial \Omega.   
+\end{cases}
+$$
+
+can be solved using a Fredholm NN, with M+1 hidden layers, where the weights and biases of the M hidden layers are used iteratively solve the BIE on a discretized grid of the boundary, $y_1, \dots, y_N$, 
 for which the final and output weights $W_{M+1} \in \mathbb{R}^{N \times N}, W_O \in \mathbb{R}^N$ are given by:
 
 $$
@@ -235,4 +244,32 @@ $$
 
 where $x^*:= (1, \phi) \in \partial \Omega$ is the unique point on the boundary corresponding to $x:= (r, \phi) \in \Omega$.  
 
+### Helmholtz PDE - PFNN Construction 
+The Helmholtz PDE:
 
+$$
+\begin{cases}
+ \Delta u(x) - \lambda u(x) = \psi(x), \quad x \in \Omega \\ 
+u(x) = f(x), \quad x \in \partial \Omega.   
+\end{cases}
+$$
+
+can be solved using a Fredholm NN with $M+1$ hidden layers, where the first M layers solve the BIE on a discretized grid of the boundary, $y_1, \dots, y_N$. The final hidden and output layers are constructed according to the Fredholm NN representation of the double layer potential for PDE \eqref{helmholtz-pde}, with weights $W_{M+1} \in \mathbb{R}^{N \times N}, W_O \in \mathbb{R}^N$ given by:
+
+$$
+W_{M+1}= I_{N \times N},
+\,\,\,\,\
+W_{O}= \left(\begin{array}{cccc}
+\mathcal{D} \Phi(x, y_1)\Delta \sigma_y, & \mathcal{D} \Phi(x, y_2)\Delta\sigma_y, & \dots, & \mathcal{D} \Phi(x, y_N) \Delta \sigma_y
+\end{array}\right)^{\top},
+$$
+
+where, $\mathcal{D} \Phi(x, y_i)$ as defined in Proposition \ref{prop-poisson}. The corresponding biases $b_{M+1} \in \mathbb{R}^{N}$ and $b_O \in \mathbb{R}$ are given by:
+
+$$
+b_{M+1} = \left(\begin{array}{ccc}
+-\beta(x^{\star}), \dots, - \beta(x^{\star})
+\end{array}\right)^{\top}, b_O= \Big(\frac{1}{2} + \int_{\Omega} \lambda \delta \Phi(x, y) dy \Big) \beta(x^{\star}) + \int_{\partial \Omega} \beta(y) \frac{\partial \Phi(x^*, y)}{\partial n_y} d\sigma_y + \int_{\mathcal{D}} \Phi(x,y) f(y) dy,
+$$
+
+where we define $\delta\Phi(x,y) := \Phi(x,y) - \Phi(x^*,y)$.
