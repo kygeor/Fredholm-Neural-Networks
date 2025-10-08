@@ -300,7 +300,7 @@ For their solution, we employ a fixed point scheme which linearizes the PDE at e
    
 $$
 \begin{cases}
-\Delta u_{n+1}(x) - \lambda u_{n+1}(x) = -\lambda u_n(x) + F(x, u_n(x)), & x \in \Omega, \label{iteration}\\
+\Delta u_{n+1}(x) - \lambda u_{n+1}(x) = -\lambda u_n(x) + F(x, u_n(x)), & x \in \Omega, \\
 u_{n+1}(x) = f(x), & x \in \partial \Omega.
 \end{cases}
 $$
@@ -311,5 +311,22 @@ $$
 \int_{\Omega} \Phi(x, y) \psi_n(y) dy \approx \sum_{r \in \mathcal{R}} \sum_{\theta \in \Theta} \Phi(x,r, \theta) \psi_n(r,\theta)r \Delta r \Delta \theta.
 $$    
 
+### Application to the inverse source problem
 
+We will be considering the inverse source problem for the PDE, consisting of a known boundary function $f : \partial \Omega \to {\mathbb R}$, as well as a coarse set of data points $\{u(x_i)\}_ {i=1,\cdots, n}, x_i \in \Omega $, and looking to approximate the unknown source function $\psi: \Omega \to {\mathbb R}$, using for a suitable model, represented by $\psi_ {\theta}: \Omega \to {\mathbb R}$ with parameters $\theta$ (e.g., a shallow neural network), such that the data $\{\tilde{u}(x_i) \}$ and function $f(x)$ satisfy the Poisson PDE. Our strategy takes advantage of the structure and convergence properties of the PFNN as follows: select a set of parameters $\theta$ such that when constructing the estimated kernel $\psi_{\theta}(\cdot, \cdot)$ and then feeding this into the PFNN with $M$ hidden layers, the output, $\hat{u}(x;\psi_{\theta})$ (which will also be denoted $\hat{u}(x)$ for brevity), is as ''close'' as possible (in terms of an appropriately chosen loss function) to the given data $\tilde{u}$. The learning problem then reduces to the optimization problem of tuning the parameters $\theta$ appropriately until we reach the optimal set $\theta^* $ and the corresponding source model $\psi_{\theta^*}$. 
 
+The inverse problem is ill-posed. Hence, we require a regularization component. For our approach, where we use a shallow neural network model for the approximation $\psi_{\theta}$), we apply a Tikhonov regularization, encapsulated by the term:
+
+$$
+{R}(\theta) = \| \psi_\theta \|_2^2, = \sum_j (\hat{\psi}_{\theta}(x_j))^2, \,\,\ \text{for } x_j \in \Omega
+$$
+
+where and the complete loss function is given by: 
+
+$$
+L(\theta) = \frac{1}{N} \sum_{i=1}^{N} \Big(\tilde{u}(x_i) - \hat{u}(x_i; {\psi}_\theta) \Big)^2 + \lambda_{reg}{R}(\theta).
+$$
+
+<img width="622" height="245" alt="Screenshot 2025-10-08 at 5 04 35 PM" src="https://github.com/user-attachments/assets/c872ce08-1b5c-4ecc-a8ef-b7f9d78a9594" />
+
+*Figure 5: Algorithm to solve inverse source problem for the Poisson PDE using the PFNN.*
