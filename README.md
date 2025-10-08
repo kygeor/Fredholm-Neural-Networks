@@ -122,17 +122,17 @@ assuming $z_i = x$.
 
 ## Application to non-linear FIEs 
 
-We can create an iterative process that "linearizes" the integral equation and allows us to solve a linear FIE at each step. To this end, consider the nonlinear operator  ${\cal T}^{K,G,g} : {\cal Z} \to {\cal Z}$ defined by
-as defined above and consider the non-linear IE %(\ref{nl-ie}), with a non-expansive integral operator:
+We can create an iterative process that "linearizes" the integral equation and allows us to solve a linear FIE at each step. To this end, consider the non-linear, non-expansive integral operator:
 
-$$(\mathcal{T}^{K,G,g}f)(x) := g(x) + \int_{\Omega}K(x,z) G(f(z))dz.$$
+$$(\mathcal{T}f)(x) := g(x) + \int_{\Omega}K(x,z) G(f(z))dz.$$
 
 Then, the iterative scheme $f_n(x) = \tilde{f}_n(x)$, where $\tilde{f}_n(x)$ is the solution to the linear FIE:
 
-    $$\tilde{f}_{n}(x) = ({L}\tilde{f}_{n-1})(x) + \int_{\Omega}K(x,z) \tilde{f}_{n}(z))dz,$$
+$$\tilde{f}_{n}(x) = ({L}\tilde{f}_{n-1})(x) + \int_{\Omega}K(x,z) \tilde{f}_{n}(z))dz,$$
     
-and 
-$$\mathcal{L}\tilde{f}_{n-1})(x) := g(x) + \int_{\Omega} K(x,y)\big( G(\tilde{f}_{n-1}(y)) - \tilde{f}_{n-1}(y)\big)dy,$$ 
+where: 
+
+$$(\mathcal{L}\tilde{f}_{n-1})(x) := g(x) + \int_{\Omega} K(x,y)\big( G(\tilde{f}_{n-1}(y)) - \tilde{f}_{n-1}(y)\big)dy,$$ 
 
 for $n \geq 1$, converges to the fixed point $f^*$  which is a solution of the non-linear FIE.
 
@@ -146,7 +146,7 @@ for $n \geq 1$, converges to the fixed point $f^*$  which is a solution of the n
 
 Consider a BVP of the form:
 
-    $$y''(x) + g(x)y(x) = h(x), 0<x<1,$$ 
+$$y''(x) + g(x)y(x) = h(x), 0<x<1,$$ 
     
 with $y(0) = \alpha, y(1) = \beta$. Then we can solve the BVP by obtaining the following FIE:
 
