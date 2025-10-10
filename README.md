@@ -51,7 +51,10 @@ When $\mathcal{T}$ is a contraction, we can obtain the iterative process:
 $$f_n(x)= g(x) +  \int_{\Omega}f_{n-1})(x), \,\,\ n \geq 1,$$
 which converges to the fixed point solution. This is often referred to as the method of successive approximations.
 
-## FNN construction
+## FNN construction for forward FIEs 
+
+Implementation in Python: [`here`](Scripts_and_Examples_Py/Fredholm_Integral_Equation_Examples.ipynb).
+
 Fredholm Neural Networks are based on the observation that the FIE approximation $f_K(x)$ can be implemented as a deep neural network with a one-dimensional input $x$, $M$ hidden layers, a linear activation function and a single output node corresponding to the estimated solution $f(x)$. The weights and biases are:
 
 $$
