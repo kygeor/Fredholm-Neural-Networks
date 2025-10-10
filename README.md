@@ -299,7 +299,7 @@ For this case the fundamental solution is given by the modified Bessel function 
 
 Examples in Python can be seen [`here`](Scripts_and_Examples_Py/PFNN_Helmholtz_PDE.ipynb) and in MATLAB [`here`](Scripts_and_Examples/PFNN_Helmholtz_PDE.m).
 
-The corresponding classes are in Python [`here`](Classes_Py/potential_fredholm_nn_models.py) and MATLAB [`here`](Classes/PotentialFredholmNeuralNetwork_Helmholtz.m).
+The corresponding classes are in Python [`here`](Classes_Py/potential_fredholm_nn_models.py) and MATLAB [`here`](Classes/PotentialFredholmNeuralNetwork_Helmholtz.m) and [`here`](Classes/PotentialFredholmNeuralNetwork_Helmholtz_dense.m).
 
 ### Semi-linear elliptic PDE - Recurrent PFNN Construction 
 Consider the semi-linear PDE of the form: 
@@ -354,3 +354,6 @@ $$
 <img width="622" height="245" alt="Screenshot 2025-10-08 at 5 04 35 PM" src="https://github.com/user-attachments/assets/c872ce08-1b5c-4ecc-a8ef-b7f9d78a9594" />
 
 *Figure 5: Algorithm to solve inverse source problem for the Poisson PDE using the PFNN.*
+
+Examples are in MATLAB [`here`](Scripts_and_Examples/Fredholm_Integral_Equation_inverse.m).
+
