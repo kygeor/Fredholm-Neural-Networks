@@ -53,8 +53,6 @@ which converges to the fixed point solution. This is often referred to as the me
 
 ## FNN construction for forward FIEs 
 
-Implementation in Python: [`here`](Scripts_and_Examples_Py/Fredholm_Integral_Equation_Examples.ipynb).
-
 Fredholm Neural Networks are based on the observation that the FIE approximation $f_K(x)$ can be implemented as a deep neural network with a one-dimensional input $x$, $M$ hidden layers, a linear activation function and a single output node corresponding to the estimated solution $f(x)$. The weights and biases are:
 
 $$
@@ -122,6 +120,11 @@ assuming $z_i = x$.
 
 *Figure 1: Architecture of the Fredholm Neural Network (FNN). Outputs can be considered across the entire (or a subset of the) input grid, or for an arbitrary output vector as shown in the second graph, by applying the integral mapping one last time.*
 
+Examples in Python can be seen [`here`](Scripts_and_Examples_Py/Fredholm_Integral_Equation_Examples.ipynb) and in matlab [`here`](Scripts_and_Examples/Fredholm_Integral_Equation_forward.m).
+
+The corresponding classes are [`here`](Classes_Py/fredholm_nn_models.py) and [`here`](Classes/FredholmNeuralNetwork.m).
+
+
 
 ## Application to non-linear FIEs 
 
@@ -143,6 +146,7 @@ for $n \geq 1$, converges to the fixed point $f^*$  which is a solution of the n
 
 *Figure 2: Iterative process to solve the non-linear FIE using the Fredholm NN architecture.*
 
+Examples in Python are in the corresponding section of the [`forward FIE notebook`](Scripts_and_Examples_Py/Fredholm_Integral_Equation_Examples.ipynb).
 
 
 ## Application to BVP ODEs
@@ -166,6 +170,8 @@ $$ K(x,t) =
 Finally, by definition of $u(x)$, we can obtain the solution to the BVP by:
 
 $$y(x) = \frac{h(x) - u(x)}{g(x)}.$$
+
+Examples in Python are in the corresponding section of the [`forward FIE notebook`](Scripts_and_Examples_Py/Fredholm_Integral_Equation_Examples.ipynb).
 
 ## Application to the inverse kernel problem (for FIEs)
 
@@ -196,6 +202,8 @@ Here, $\hat{f}(x;\hat{K}_{\theta})$ denotes the output of the Fredholm NN.
 <img width="613" height="234" alt="Screenshot 2025-10-08 at 2 26 57 PM" src="https://github.com/user-attachments/assets/5bd73f8c-0b5a-4500-bafc-7535dfb46edc" />
 
 *Figure 3: Algorithm to solve the inverse problem using the Fredholm NN framework.*
+
+The implementation is given for a specific example in MATLAB, using the Levenberg-Marquardt training algorithm [`here`](Scripts_and_Examples/Fredholm_Integral_Equation_inverse.m).
 
 # Potential Fredholm Neural Networks for elliptic PDEs
 
@@ -252,6 +260,11 @@ $$
 
 where $x^*:= (1, \phi) \in \partial \Omega$ is the unique point on the boundary corresponding to $x:= (r, \phi) \in \Omega$.  
 
+Examples in Python can be seen [`here`](Scripts_and_Examples_Py/PFNN_Poisson_PDE.ipynb) and in MATLAB [`here`](Scripts_and_Examples/PFNN_Poisson_PDE_sparse_prediction_for_inverse.m).
+
+The corresponding classes are in Python [`here`](Classes_Py/potential_fredholm_nn_models.py) and MATLAB [`here`](Classes/PotentialFredholmNeuralNetwork_Poisson.m).
+
+
 ### Helmholtz PDE - PFNN Construction 
 The Helmholtz PDE:
 
@@ -284,6 +297,10 @@ where we define $\delta\Phi(x,y) := \Phi(x,y) - \Phi(x^*,y)$.
 
 For this case the fundamental solution is given by the modified Bessel function of the second kind $\Phi(x,y) = -\frac{1}{2 \pi} K_0(\lambda | x-y|).$
 
+Examples in Python can be seen [`here`](Scripts_and_Examples_Py/PFNN_Helmholtz_PDE.ipynb) and in MATLAB [`here`](Scripts_and_Examples/PFNN_Helmholtz_PDE.m).
+
+The corresponding classes are in Python [`here`](Classes_Py/potential_fredholm_nn_models.py) and MATLAB [`here`](Classes/PotentialFredholmNeuralNetwork_Helmholtz.m).
+
 ### Semi-linear elliptic PDE - Recurrent PFNN Construction 
 Consider the semi-linear PDE of the form: 
 
@@ -312,7 +329,11 @@ At each iteration we solve the PFNN for the Helmholtz PDE using the approximatio
 
 $$
 \int_{\Omega} \Phi(x, y) \psi_n(y) dy \approx \sum_{r \in \mathcal{R}} \sum_{\theta \in \Theta} \Phi(x,r, \theta) \psi_n(r,\theta)r \Delta r \Delta \theta.
-$$    
+$$   
+
+Examples in Python can be seen [`here`](Scripts_and_Examples_Py/PFNN_Semi-linear_PDE.ipynb) and in MATLAB [`here`](Scripts_and_Examples/PFNN_Semi_linear_PDE.m).
+
+The corresponding classes are in Python [`here`](Classes_Py/potential_fredholm_nn_models.py) and MATLAB [`here`](Classes/PotentialFredholmNeuralNetwork_Helmholtz.m).
 
 ### Application to the inverse source problem
 
